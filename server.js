@@ -2,13 +2,15 @@ const express = require('express');
 const fs = require('fs');
 const config = require('./component/index.js');
 
+const app = express();
+
 const application = {
     Requests: {
         all: (requestsArray) => {
             // requestsArray.map(request => request)
         },
         Request: (url) => {
-            switch (url) {
+            switch (url.uri) {
                 case '/services/properties/schemas': {
                     return '\\localhost:3000/microservice/schemas'
                 }
@@ -17,9 +19,20 @@ const application = {
     }
 };
 
+{/* Iterate over all route objects */}
 // config.routers.map(router => console.log(router.url));
 
-console.log(config.routers[0].preHandler(application));
+{/* Call pre-handler with application config */}
+//console.log(config.routers[0].preHandler(application));
+
+app.get('/services/properties/schemas', (request, response) => {
+    const url = request.url;
+    const params = request.params;
+
+    config.routers[0].preHandler(application);
+});
+let promiseChain = config.routers[0].preHandler(application);
+Promise.all(promiseChain).then(responsesArray => config.routers[0].postHandler(responsesArray));
 
 const app = express();
 
