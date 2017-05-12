@@ -2,8 +2,24 @@ const express = require('express');
 const fs = require('fs');
 const config = require('./component/index.js');
 
-// console.log(config.routers);
-config.routers.map(router => console.log(router.url));
+const application = {
+    Requests: {
+        all: (requestsArray) => {
+            // requestsArray.map(request => request)
+        },
+        Request: (url) => {
+            switch (url) {
+                case '/services/properties/schemas': {
+                    return '\\localhost:3000/microservice/schemas'
+                }
+            }
+        }
+    }
+};
+
+// config.routers.map(router => console.log(router.url));
+
+console.log(config.routers[0].preHandler(application));
 
 const app = express();
 
