@@ -25,6 +25,7 @@ const application = {
 {/* Call pre-handler with application config */}
 //console.log(config.routers[0].preHandler(application));
 
+{/* Call preHandler with application object */}
 app.get('/services/properties/schemas', (request, response) => {
     const url = request.url;
     const params = request.params;
