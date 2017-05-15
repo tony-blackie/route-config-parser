@@ -1,20 +1,36 @@
 const express = require('express');
 const fs = require('fs');
 const config = require('./component/index.js');
+const http = require('http');
+const request = http.request;
 
 const app = express();
 
 const application = {
     Requests: {
         all: (requestsArray) => {
-            // requestsArray.map(request => request)
+            Promise.all(requestsArray)
+            .then(responses => {
+              console.log('worked');
+              config.routers[0].postHandler(responses);
+            })
+            .catch(error => console.log(error));
         },
-        Request: (url) => {
-            switch (url.uri) {
+        Request: (config) => {
+            let uri;
+            switch (config.uri) {
                 case '/services/properties/schemas': {
-                    return '\\localhost:3000/microservice/schemas'
+                    uri = '\\localhost:3000/microserviceName/schemas';
+                }
+                case '/services/properties/organization': {
+                    uri = '\\localhost:3000/microserviceName/organization'
                 }
             }
+
+            return request({
+                host: uri,
+                type: config.type
+            });
         }
     }
 };
@@ -26,16 +42,13 @@ const application = {
 //console.log(config.routers[0].preHandler(application));
 
 {/* Call preHandler with application object */}
-app.get('/services/properties/schemas', (request, response) => {
-    const url = request.url;
-    const params = request.params;
+// app.get('/services/properties/schemas', (request, response) => {
+//     const url = request.url;
+//     const params = request.params;
+
 
     config.routers[0].preHandler(application);
-});
-let promiseChain = config.routers[0].preHandler(application);
-Promise.all(promiseChain).then(responsesArray => config.routers[0].postHandler(responsesArray));
-
-const app = express();
+// });
 
 // let data = fs.readFile('./component/someFile.json', 'utf8', (error, data) => {
 //     if (error) {

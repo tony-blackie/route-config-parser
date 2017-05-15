@@ -8,16 +8,21 @@ var config = {
             },
             'preHandler': function (application) {
                 const option1 = {
-                    uri: '/services/properties/schemas'
+                    uri: '/services/properties/schemas',
+                    type: 'GET'   // added request type
                 };
                 const option2 = {
-                    uri: '/services/properties/organization'
+                    uri: '/services/properties/organization',
+                    type: 'GET'   // added request type
                 };
                 const p1 = application.Requests.Request(option1);
                 const p2 = application.Requests.Request(option2);
-                return application.Requests.all([p1, p2]);
+                console.log(`promise1: ${p1}`);
+                console.log(`promise2: ${p2}`);
+                return application.Requests.all([p1, p2]);  //possibly, return is not required here
             },
             'postHandler': function (data) {
+                console.log(`worked: ${data}`);
                 return data;
             }
         },
