@@ -4,7 +4,7 @@ var config = {
             'url': '/services/properties/schemas',
             'permission': '10000000065',
             'handler': function (req, res) {
-              request.get('/schemas/org/' + req.query)
+                request.get('/schemas/org/' + req.query)
                 .on('response', function(response){
                     res.send(response)
                 })

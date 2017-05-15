@@ -30,7 +30,7 @@ var config = {
             'url': '/services/properties/schemas',
             'permission': '10000000065',
             'handler': function (req, res) {
-              request.get('/schemas/org/' + req.query)
+                return request.get('/schemas/' + req.query)
                 .on('response', function(response){
                     res.send(response)
                 })
@@ -40,7 +40,7 @@ var config = {
             'url': '/services/properties/organization',
             'permission': '10000000065',
             'handler': function (req, res) {
-              request.get('/properties/org' + req.params.id + '/' + req.params.resourse_name)
+                return request.get('/properties' + req.params.id + '/' + req.params.resourse_name)
                 .on('response', function(response){
                     res.send(response)
                 })

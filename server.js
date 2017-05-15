@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const config = require('./component/index.js');
 const http = require('http');
+const httpMocks = require('node-mocks-http');
 const request = http.request;
 
 const app = express();
@@ -17,20 +18,32 @@ const application = {
             .catch(error => console.log(error));
         },
         Request: (config) => {
-            let uri;
+            let uri,
+                handler;  //handler is taken from object with the given url
+            let base = 'localhost';
+            let query = '';
             switch (config.uri) {
                 case '/services/properties/schemas': {
                     uri = '\\localhost:3000/microserviceName/schemas';
                 }
                 case '/services/properties/organization': {
-                    uri = '\\localhost:3000/microserviceName/organization'
+                    uri = '\\localhost:3000/__mocks__/organization'
                 }
             }
 
-            return request({
-                host: uri,
-                type: config.type
-            });
+            // return request({
+            //     host: uri,
+            //     path: '/__mocks__',
+            //     port: '3000',
+            //     method: config.type
+            // }, handler);
+
+            let requestParams = {
+                url: url,
+                query: query
+            };
+
+            handler(requestParams);
         }
     }
 };
@@ -42,13 +55,12 @@ const application = {
 //console.log(config.routers[0].preHandler(application));
 
 {/* Call preHandler with application object */}
-// app.get('/services/properties/schemas', (request, response) => {
-//     const url = request.url;
-//     const params = request.params;
+app.get('/services/properties/schemas', (request, response) => {
+    const url = request.url;
+    const params = request.params;
 
-
-    config.routers[0].preHandler(application);
-// });
+    config.routers[1].handler(application);
+});
 
 // let data = fs.readFile('./component/someFile.json', 'utf8', (error, data) => {
 //     if (error) {
