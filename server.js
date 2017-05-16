@@ -2,15 +2,25 @@ const express = require('express');
 const fs = require('fs');
 const config = require('./component/index.js');
 const http = require('http');
+const path = require('path');
 
 const app = express();
 
+app.use(express.static('component'));
+// app.use(express.static(__dirname + '/component'));
+//
+// app.get('*', function(req, res){
+//   res.sendFile(__dirname + '/component/index.html');
+// });
+let response;
 const application = {
     Requests: {
         all: (requestsArray) => {
             Promise.all(requestsArray)
             .then(responses => {
-                config.routers[0].postHandler(responses);
+                let postHandlerResult = config.routers[0].postHandler(responses);
+
+                response.send(postHandlerResult);
             })
             .catch(error => console.log(error));
         },
@@ -83,9 +93,16 @@ const application = {
 //console.log(config.routers[0].preHandler(application));
 
 {/* Call preHandler with application object */}
-// app.get('/services/properties/schemas', (req, res) => {
-//     const url = req.url;
-//     const params = req.params;
+app.get('/services/properties/all/schemas', (req, res) => {
+    console.log('get on the server worked');
+    const url = req.url;
+    const params = req.params;
+    response = res;
 
     config.routers[0].preHandler(application);
-// });
+});
+
+const port = 8080;
+
+app.listen(port);
+console.log(`App is running on port ${port}`);

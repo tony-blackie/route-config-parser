@@ -1,7 +1,7 @@
 var config = {
     routers: [
         {
-            'url': '/services/properties/index',
+            'url': '/services/properties/all/schemas',
             'permission': '10000000065',
             'handlerParams': {
                 aggregated: true
