@@ -6,24 +6,31 @@ var config = {
             'handlerParams': {
                 aggregated: true
             },
-            'preHandler': function (application) {
-                let params = '';
+            'preHandler': function (application, reqParams) {
+                /* Mock params */
+                reqParams = {
+                    query: 'sub_service1&sub_service2'
+                };
+                /* Mock params end */
+
                 let promise;
-                const options = {
+
+                let options = {
                     uri: '/services/schemas/org',
-					          qs: params
+					          qs: reqParams.query
                 };
 
                 const schemasPromise = application.Requests.Request(options);
-                console.log(`schemasPromise: ${schemasPromise.then}`);
 
                 schemasPromise
                 .then((schemas) => {
         						let requests = [];
+                    console.log(schemas);
         						schemas.map((schema) => {
-          							requests.push(application.Requests.Request({
-          							    uri: '/services/properties/org/' + schema.id
-          							}))
+                        options = {
+                            uri: '/services/properties/org/' + schema.id
+                        };
+          							requests.push(application.Requests.Request(options))
         						});
                     promise = application.Requests.all(requests)
 
@@ -34,6 +41,8 @@ var config = {
                 });
             },
             'postHandler': (data) => {
+                console.log(data);
+                data.map(item => console.log(`postHandler callback, id: ${item.id}, type: ${item.property_type}`));
                 return data;
             }
         },
