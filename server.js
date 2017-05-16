@@ -2,8 +2,6 @@ const express = require('express');
 const fs = require('fs');
 const config = require('./component/index.js');
 const http = require('http');
-const httpMocks = require('node-mocks-http');
-const request = http.request;
 
 const app = express();
 
@@ -31,13 +29,6 @@ const application = {
                 }
             }
 
-            // return request({
-            //     host: uri,
-            //     path: '/__mocks__',
-            //     port: '3000',
-            //     method: config.type
-            // }, handler);
-
             let requestParams = {
                 url: url,
                 query: query
@@ -55,19 +46,9 @@ const application = {
 //console.log(config.routers[0].preHandler(application));
 
 {/* Call preHandler with application object */}
-app.get('/services/properties/schemas', (request, response) => {
-    const url = request.url;
-    const params = request.params;
+app.get('/services/properties/schemas', (req, res) => {
+    const url = req.url;
+    const params = req.params;
 
-    config.routers[1].handler(application);
+    config.routers[0].preHandler(application);
 });
-
-// let data = fs.readFile('./component/someFile.json', 'utf8', (error, data) => {
-//     if (error) {
-//         return console.log(error);
-//     }
-//
-//     data = JSON.parse(data);
-//     console.log(data.name);
-//     console.log(data.age);
-// });
