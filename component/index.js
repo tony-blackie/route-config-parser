@@ -13,8 +13,6 @@ var config = {
                 };
                 /* Mock params end */
 
-                let promise;
-
                 let options = {
                     uri: '/services/schemas/org',
 					          qs: reqParams.query
@@ -32,9 +30,8 @@ var config = {
                         };
           							requests.push(application.Requests.Request(options))
         						});
-                    promise = application.Requests.all(requests)
 
-                    return promise;
+                    return application.Requests.all(requests);
       					})
                 .catch((error) => {
 
