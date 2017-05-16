@@ -8,25 +8,36 @@ var config = {
             },
             'preHandler': function (application) {
                 let params = '';
+                let promise;
                 const options = {
                     uri: '/services/schemas/org',
 					          qs: params
                 };
-                const getSchemas = application.Request(option);
 
-                return new Promise((resolve, reject) => {
-          					getSchemas.then((schemas) => {
-            						let requests = [];
-            						schemas.map((schema) => {
-              							requests.push(application.Request({
-              							    uri: '/services/properties/org/' + schema
-              							}))
-            						});
-            						resolve(application.all(requests));
-          					});
-    				    });
+                const schemasPromise = application.Requests.Request(options);
+                console.log(`schemasPromise: ${schemasPromise.then}`);
+
+                schemasPromise
+                .then((schemas) => {
+                    console.log('then worked: ' + schemas);
+        						let requests = [];
+        						schemas.map((schema) => {
+          							requests.push(application.Requests.Request({
+          							    uri: '/services/properties/org/' + schema.id
+          							}))
+        						});
+                    promise = application.Requests.all(requests)
+
+                    return promise;
+      					})
+                .catch((error) => {
+                    console.log(`catch worked: ${error}`);
+                });
             },
-            'postHandler': data => data
+            'postHandler': (data) => {
+                console.log(`postHandler worked: ${data}`);
+                return data;
+            }
         },
         {
             'url': '/services/properties/schemas',

@@ -41,12 +41,11 @@ const application = {
 };
 
 {/* Call preHandler with application object */}
-app.get('/services/properties/schemas', (request, response) => {
-    const url = request.url;
-    const params = request.params;
+// app.get('/services/properties/schemas', (request, response) => {
+//     const url = request.url;
+//     const params = request.params;
 
-    // config.routers[1].handler();
-    http.get('url', handler);
-});
+    //http.get('url', handler);
+// });
 
-config.routers[1].handler();
+config.routers[0].preHandler();

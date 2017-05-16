@@ -29,12 +29,26 @@ const application = {
                 }
             }
 
-            let requestParams = {
-                url: url,
-                query: query
-            };
+            let result = new Promise((resolve, reject) => {
+                resolve([
+                        {
+                            id: 0
+                        },
+                        {
+                            id: 1
+                        }
+                ]);
+            });
+            console.log(`result: ${result}`);
 
-            handler(requestParams);
+            return result;
+
+            // return http.request({
+            //     host: uri,
+            //     path: '/__mocks__',
+            //     port: '3000',
+            //     method: config.type ? config.type : 'GET'
+            // }, handler);
         }
     }
 };
@@ -46,9 +60,9 @@ const application = {
 //console.log(config.routers[0].preHandler(application));
 
 {/* Call preHandler with application object */}
-app.get('/services/properties/schemas', (req, res) => {
-    const url = req.url;
-    const params = req.params;
+// app.get('/services/properties/schemas', (req, res) => {
+//     const url = req.url;
+//     const params = req.params;
 
     config.routers[0].preHandler(application);
-});
+// });
