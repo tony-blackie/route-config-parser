@@ -7,11 +7,7 @@ const path = require('path');
 const app = express();
 
 app.use(express.static('component'));
-// app.use(express.static(__dirname + '/component'));
-//
-// app.get('*', function(req, res){
-//   res.sendFile(__dirname + '/component/index.html');
-// });
+
 let response;
 const application = {
     Requests: {
