@@ -19,7 +19,6 @@ var config = {
 
                 schemasPromise
                 .then((schemas) => {
-                    console.log('then worked: ' + schemas);
         						let requests = [];
         						schemas.map((schema) => {
           							requests.push(application.Requests.Request({
@@ -31,11 +30,10 @@ var config = {
                     return promise;
       					})
                 .catch((error) => {
-                    console.log(`catch worked: ${error}`);
+
                 });
             },
             'postHandler': (data) => {
-                console.log(`postHandler worked: ${data}`);
                 return data;
             }
         },

@@ -42,13 +42,6 @@ const application = {
             console.log(`result: ${result}`);
 
             return result;
-
-            // return http.request({
-            //     host: uri,
-            //     path: '/__mocks__',
-            //     port: '3000',
-            //     method: config.type ? config.type : 'GET'
-            // }, handler);
         }
     }
 };
