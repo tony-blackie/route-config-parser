@@ -1,8 +1,7 @@
 const express = require('express');
 const fs = require('fs');
-const config = require('./component/index.js');
 const http = require('http');
-const path = require('path');
+const config = require('./component/index.js');
 
 const app = express();
 
@@ -82,15 +81,8 @@ const application = {
     }
 };
 
-{/* Iterate over all route objects */}
-// config.routers.map(router => console.log(router.url));
-
-{/* Call pre-handler with application config */}
-//console.log(config.routers[0].preHandler(application));
-
 {/* Call preHandler with application object */}
 app.get('/services/properties/all/schemas', (req, res) => {
-    console.log('get on the server worked');
     const url = req.url;
     const params = req.params;
     response = res;
