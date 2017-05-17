@@ -14,20 +14,17 @@ var config = {
 
                             const p1 = application.Requests.Request(option1);
 
-                            p1.then(response => {
+                            return p1.then(response => {
                                 const option2 = {
                                     uri: '/services/org/resources' + response.id,
                                     method: 'POST'
                                 };
 
-                                const p2 = application.Requests.Request(option2);
-
-                                return application.Requests.all([p2]);
+                                return application.Requests.Request(option2);
                             });
 
             },
             'postHandler': function (data) {
-
                 return {
                     username: data[0].firstName + ' ' + data[0].lastName,
                     menuItems: data[1].menuItems
