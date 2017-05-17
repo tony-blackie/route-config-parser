@@ -9,7 +9,10 @@ var config = {
             'preHandler': function (application, reqParams) {
                 /* Mock params */
                 reqParams = {
-                    query: 'sub_service1&sub_service2'
+                    query: [
+                      sub_service1,
+                      sub_service2
+                    ]
                 };
                 /* Mock params end */
 
