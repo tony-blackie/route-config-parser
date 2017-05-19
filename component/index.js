@@ -23,10 +23,9 @@ var config = {
 
                 const schemasPromise = application.Requests.Request(options);
 
-                schemasPromise
+                return schemasPromise
                 .then((schemas) => {
         						let requests = [];
-                    console.log(schemas);
         						schemas.map((schema) => {
                         options = {
                             uri: '/services/properties/org/' + schema.id
@@ -36,9 +35,6 @@ var config = {
 
                     return application.Requests.all(requests);
       					})
-                .catch((error) => {
-
-                });
             },
             'postHandler': (data) => {
                 console.log(data);
